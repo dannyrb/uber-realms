@@ -9,22 +9,35 @@ Uber Realms is a private [Realm of the Mad God](http://uber-realms.com/download.
 
 ## How Can I Play? ##
 
-- Navigate to [Uber Realm's Client Download Page](http://uber-realms.com/download.html)
-- Download our private server's client
-- Open the `.swf` file with a browser that supports flash
+- Visit [Uber Realm's PLAY! Page](http://uber-realms.com/play/)
 - Register an account
 - Sign in, and play! (:
 
+
+## ~~ Index ~~ ##
+
+- Frequently Asked Questions (FAQ)
+- Self-Hosting
+	- Local Machine (Hamachi)
+	- Linux Virtual Private Server (VPS)
+- Modifying Existing Code
+- Credits
+
+
+## Frequently Asked Questions (FAQ) ##
+
+**Example question?**
+*Exameple Answer*
 
 ## How Do I Host A Private Server? ##
 
 Note, there are many different ways to "host" a server for yourself and your friends to play on. The easiest option is to "host" locally. The harder option, the one that will take money, time, and familiarity with servers, is to host using a "virtual private server". However, you will notice less lag, and be able to support more active/online users.
 
-### Local: ###
+### Local Machine (Hamachi) ###
 
 - Guide coming soon
 
-### Linux VPS: ###
+### Linux Virtual Private Server (VPS) ###
 
 - Guide coming soon
 
