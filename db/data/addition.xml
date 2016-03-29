@@ -1599,7 +1599,7 @@
 
   <!-- Unique Objects / Test Items -->
   
-  <Object type="0xff7" id="Potion of Oryx">
+  <Object type="0x1cdf" id="Potion of Oryx">
     <Class>Equipment</Class>
     <Item/>
     <Texture>
@@ -4283,6 +4283,7 @@
       <Index>0x8c</Index>
     </Texture>
     <SlotType>9</SlotType>
+	<Tier>6</Tier>
     <Description> A huge, flawless topaz set in a stunningly beautiful gold ring.</Description>
     <ActivateOnEquip stat="0" amount="180">IncrementStat</ActivateOnEquip>
     <BagType>4</BagType>
@@ -4410,7 +4411,7 @@
 	  <ConditionEffect duration="3">Bleeding</ConditionEffect>
     </Projectile>
 
-    <Projectile id="0">
+    <Projectile id="4">
       <ObjectId>Dragon Attack Black Bullet</ObjectId>
       <Speed>30</Speed>
       <Damage>87</Damage>
@@ -5074,6 +5075,113 @@
       <LifetimeMS>6000</LifetimeMS>
     </Projectile>
 	</Object>
+	
+<Object type="0x6bcf" id="Ring of Unbound Magic">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x7d</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless amethyst set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="3" amount="180">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x5bcf" id="Ring of Unbound Attack">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x6b</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless spinel set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="20" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x4bcf" id="Ring of Unbound Defense">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x6c</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless onyx set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="21" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x3bcf" id="Ring of Unbound Speed">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x6d</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless emerald set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="22" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x2bcf" id="Ring of Unbound Dexterity">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x5b</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless citrine set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="28" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x1bcf" id="Ring of Unbound Vitality">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x5c</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless ruby set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="26" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+<Object type="0x1ccf" id="Ring of Unbound Wisdom">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>lofiObj6</File>
+      <Index>0x5d</Index>
+    </Texture>
+    <SlotType>9</SlotType>
+	<Tier>6</Tier>
+    <Description> A huge, flawless sapphire set in a stunningly beautiful gold ring.</Description>
+    <ActivateOnEquip stat="27" amount="9">IncrementStat</ActivateOnEquip>
+    <BagType>4</BagType>
+    <FameBonus>5</FameBonus>
+  </Object>
+  
+
 	<!--chars8x8rEncounters 85!-->
   <!--
   <Object type="0x1940" id="Donran">

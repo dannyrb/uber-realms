@@ -30,13 +30,13 @@ namespace wServer.realm
                     //Tuple.Create("Pirate", 0.2),
                     //Tuple.Create("Piratess", 0.1),
                     Tuple.Create("Snake", 0.2),
-                    Tuple.Create("Scorpion Queen", 0.3),
+                    Tuple.Create("Scorpion Queen", 0.1),
                 })
             },
             { WmapTerrain.ShorePlains, Tuple.Create(
                 150, new []
                 {
-                    Tuple.Create("Bandit Leader", 0.4),
+                    Tuple.Create("Bandit Leader", 0.1),
                     Tuple.Create("Red Gelatinous Cube", 0.2),
                     Tuple.Create("Purple Gelatinous Cube", 0.2),
                     Tuple.Create("Green Gelatinous Cube", 0.2),
@@ -45,26 +45,26 @@ namespace wServer.realm
             { WmapTerrain.LowPlains, Tuple.Create(
                 250, new []
                 {
-                    Tuple.Create("Hobbit Mage", 0.5),
-                    Tuple.Create("Undead Hobbit Mage", 0.4),
+                    Tuple.Create("Hobbit Mage", 0.1),
+                    Tuple.Create("Undead Hobbit Mage", 0.1),
                     Tuple.Create("Sumo Master", 0.1),
                 })
             },
             { WmapTerrain.LowForest, Tuple.Create(
                 250, new []
                 {
-                    Tuple.Create("Elf Wizard", 0.2),
-                    Tuple.Create("Goblin Mage", 0.2),
-                    Tuple.Create("Easily Enraged Bunny", 0.3),
-                    Tuple.Create("Forest Nymph", 0.3),
+                    Tuple.Create("Elf Wizard", 0.1),
+                    Tuple.Create("Goblin Mage", 0.1),
+                    Tuple.Create("Easily Enraged Bunny", 0.1),
+                    Tuple.Create("Forest Nymph", 0.1),
                 })
             },
             { WmapTerrain.LowSand, Tuple.Create(
                 200, new []
                 {
-                    Tuple.Create("Sandsman King", 0.4),
-                    Tuple.Create("Giant Crab", 0.2),
-                    Tuple.Create("Sand Devil", 0.4),
+                    Tuple.Create("Sandsman King", 0.1),
+                    Tuple.Create("Giant Crab", 0.1),
+                    Tuple.Create("Sand Devil", 0.1),
                 })
             },
             { WmapTerrain.MidPlains, Tuple.Create(
@@ -79,7 +79,7 @@ namespace wServer.realm
                     Tuple.Create("Paper Golem", 0.04),
                     Tuple.Create("Big Green Slime", 0.08),
                     Tuple.Create("Swarm", 0.05),
-                    Tuple.Create("Wasp Queen", 0.2),
+                    Tuple.Create("Wasp Queen", 0.1),
                     Tuple.Create("Shambling Sludge", 0.03),
                     Tuple.Create("Orc King", 0.06),
                 })
@@ -87,7 +87,7 @@ namespace wServer.realm
             { WmapTerrain.MidForest, Tuple.Create(
                 200, new []
                 {
-                    Tuple.Create("Dwarf King", 0.3),
+                    Tuple.Create("Dwarf King", 0.1),
                     //Tuple.Create("Metal Golem", 0.05),
                     //Tuple.Create("Clockwork Golem", 0.05),
                     Tuple.Create("Werelion", 0.1),
@@ -99,18 +99,18 @@ namespace wServer.realm
             { WmapTerrain.MidSand, Tuple.Create(
                 200, new []
                 {
-                    Tuple.Create("Desert Werewolf", 0.25),
+                    Tuple.Create("Desert Werewolf", 0.1),
                     //Tuple.Create("Fire Golem", 0.1),
                     Tuple.Create("Darkness Golem", 0.1),
                     Tuple.Create("Sand Phantom", 0.2),
-                    Tuple.Create("Nomadic Shaman", 0.25),
+                    Tuple.Create("Nomadic Shaman", 0.1),
                     Tuple.Create("Great Lizard", 0.1),
                 })
             },
             { WmapTerrain.HighPlains, Tuple.Create(
                 300, new []
                 {
-                    Tuple.Create("Shield Orc Key", 0.2),
+                    Tuple.Create("Shield Orc Key", 0.1),
                     //Tuple.Create("Urgle", 0.2),
                     //Tuple.Create("Lord of the Lost Lands", 0.3)
                     //Tuple.Create("Undead Dwarf God", 0.6)
@@ -129,7 +129,7 @@ namespace wServer.realm
                 {
                     //Tuple.Create("Minotaur", 0.4),
                     //Tuple.Create("Flayer God", 0.4),
-                    Tuple.Create("Flamer King", 0.2)
+                    Tuple.Create("Flamer King", 0.1)
                 })
             },
             { WmapTerrain.Mountains, Tuple.Create(
@@ -174,7 +174,7 @@ namespace wServer.realm
             // Use Box-Muller algorithm
             double u1 = GetUniform(rand);
             double u2 = GetUniform(rand);
-            double r = System.Math.Sqrt(-2.0 * Math.Log(u1));
+            double r = Math.Sqrt(-2.0 * Math.Log(u1));
             double theta = 2.0 * Math.PI * u2;
             return r * Math.Sin(theta);
         }
