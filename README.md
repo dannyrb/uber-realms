@@ -1,6 +1,6 @@
 # Uber Realms #
 
-Uber Realms is a private [Realm of the Mad God](http://uber-realms.com/download.html))RotMG) server. In recent years, development and updates for RotMG have rapidly decreased. The global user base is still over 100,000 active weekly players, but there is a strong desire for new content and improved game play. The goal of this project is to:
+Uber Realms is a private [Realm of the Mad God](http://uber-realms.com/download.html) (RotMG) server. In recent years, development and updates for RotMG have rapidly decreased. The global user base is still over 100,000 active weekly players, but there is a strong desire for new content and improved game play. The goal of this project is to:
 
 - Make it easier for others to host private RotMG Servers (hosted and local)
 - Clean up the existing code to make it less error prone and more efficient
