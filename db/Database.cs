@@ -10,6 +10,7 @@ namespace db
     public partial class Database : IDisposable
     {
         MySqlConnection con;
+
         public Database()
         {
             ////////////////
@@ -81,7 +82,9 @@ AND characters.charId=death.chrId;";
             ret.Sort((a, b) => -Comparer<int>.Default.Compare(a.Date, b.Date));
             return ret.Take(10).ToList();
         }
-        static string[] names = new string[] {
+
+        static string[] names = new string[]
+        {
             "Darq", "Deyst", "Drac", "Drol",
             "Eango", "Eashy", "Eati", "Eendi", "Ehoni",
             "Gharr", "Iatho", "Iawa", "Idrae", "Iri", "Issz", "Itani",
@@ -92,6 +95,7 @@ AND characters.charId=death.chrId;";
             "Tal", "Tiar", "Uoro", "Urake", "Utanu",
             "Vorck", "Vorv", "Yangu", "Yimi", "Zhiar"
         };
+
         public static Account CreateGuestAccount(string uuid)
         {
             return new Account()
@@ -125,7 +129,8 @@ AND characters.charId=death.chrId;";
         public Account Verify(string uuid, string password)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE uuid=@uuid AND password=SHA1(@password);";
+            cmd.CommandText =
+                "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE uuid=@uuid AND password=SHA1(@password);";
             cmd.Parameters.AddWithValue("@uuid", uuid);
             cmd.Parameters.AddWithValue("@password", password);
             Account ret;
@@ -149,7 +154,7 @@ AND characters.charId=death.chrId;";
                     },
                     NameChosen = rdr.GetBoolean("namechosen"),
                     NextCharSlotPrice = 0,
-                    VerifiedEmail = true,//rdr.GetBoolean("verified")
+                    VerifiedEmail = true, //rdr.GetBoolean("verified")
                     Locked = Utils.StringListToIntList(rdr.GetString("locked").Split(',').ToList()),
                     Ignored = Utils.StringListToIntList(rdr.GetString("ignored").Split(',').ToList()),
                 };
@@ -158,6 +163,7 @@ AND characters.charId=death.chrId;";
             ret.Guild.Name = GetGuildName(ret.Guild.Id);
             return ret;
         }
+
         public Account Register(string uuid, string password, bool isGuest)
         {
             var cmd = CreateQuery();
@@ -166,10 +172,11 @@ AND characters.charId=death.chrId;";
             if ((int)(long)cmd.ExecuteScalar() > 0) return null;
 
             cmd = CreateQuery();
-            cmd.CommandText = "INSERT INTO accounts(uuid, password, name, rank, namechosen, verified, guild, guildRank, vaultCount, maxCharSlot, regTime, guest, banned, locked, ignored) VALUES(@uuid, SHA1(@password), @name, 0, 1, 0, 0, 0, 1, 1, @regTime, @guest, 0, @empty, @empty);";
+            cmd.CommandText =
+                "INSERT INTO accounts(uuid, password, name, rank, namechosen, verified, guild, guildRank, vaultCount, maxCharSlot, regTime, guest, banned, locked, ignored) VALUES(@uuid, SHA1(@password), @name, 0, 1, 0, 0, 0, 1, 1, @regTime, @guest, 0, @empty, @empty);";
             cmd.Parameters.AddWithValue("@uuid", uuid);
             cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@name", uuid);//names[(uint)uuid.GetHashCode() % names.Length]);
+            cmd.Parameters.AddWithValue("@name", uuid); //names[(uint)uuid.GetHashCode() % names.Length]);
             cmd.Parameters.AddWithValue("@guest", isGuest);
             cmd.Parameters.AddWithValue("@regTime", DateTime.Now);
             cmd.Parameters.AddWithValue("@empty", "");
@@ -183,7 +190,8 @@ AND characters.charId=death.chrId;";
                 int accId = Convert.ToInt32(cmd.ExecuteScalar());
 
                 cmd = CreateQuery();
-                cmd.CommandText = "INSERT INTO stats(accId, fame, totalFame, credits, totalCredits) VALUES(@accId, 100, 100, 0, 0);";
+                cmd.CommandText =
+                    "INSERT INTO stats(accId, fame, totalFame, credits, totalCredits) VALUES(@accId, 100, 100, 0, 0);";
                 cmd.Parameters.AddWithValue("@accId", accId);
                 cmd.ExecuteNonQuery();
 
@@ -202,10 +210,12 @@ AND characters.charId=death.chrId;";
             cmd.Parameters.AddWithValue("@uuid", uuid);
             return (int)(long)cmd.ExecuteScalar() > 0;
         }
+
         public Account GetAccount(int id)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE id=@id;";
+            cmd.CommandText =
+                "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE id=@id;";
             cmd.Parameters.AddWithValue("@id", id);
             Account ret;
             using (var rdr = cmd.ExecuteReader())
@@ -237,10 +247,12 @@ AND characters.charId=death.chrId;";
             ret.Guild.Name = GetGuildName(ret.Guild.Id);
             return ret;
         }
+
         public Account GetAccount(string name)
         {
             var cmd = CreateQuery();
-            cmd.CommandText = "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE name=@name;";
+            cmd.CommandText =
+                "SELECT id, name, rank, namechosen, verified, guild, guildRank, banned, locked, ignored FROM accounts WHERE name=@name;";
             cmd.Parameters.AddWithValue("@name", name);
             Account ret;
             using (var rdr = cmd.ExecuteReader())
@@ -289,6 +301,7 @@ SELECT credits FROM stats WHERE accId=@accId;";
             cmd.Parameters.AddWithValue("@amount", amount);
             return (int)cmd.ExecuteScalar();
         }
+
         public int UpdateFame(Account acc, int amount)
         {
             var cmd = CreateQuery();
@@ -391,6 +404,7 @@ SELECT fame FROM stats WHERE accId=@accId;";
                 }
             }
         }
+
         public void SaveChest(Account acc, VaultChest chest)
         {
             var cmd = CreateQuery();
@@ -400,6 +414,7 @@ SELECT fame FROM stats WHERE accId=@accId;";
             cmd.Parameters.AddWithValue("@items", chest._Items);
             cmd.ExecuteNonQuery();
         }
+
         public VaultChest CreateChest(Account acc)
         {
             var cmd = CreateQuery();
@@ -597,7 +612,8 @@ WHERE accId=@accId AND charId=@charId;";
             }
             catch (Exception ex)
             {
-                var exceptionMessage = $"SaveCharacter() -- UpdateCharacters :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
+                var exceptionMessage =
+                    $"SaveCharacter() -- UpdateCharacters :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
                 Console.WriteLine(exceptionMessage);
             }
 
@@ -619,98 +635,66 @@ bestFame = GREATEST(bestFame, @bestFame);";
             }
             catch (Exception ex)
             {
-                var exceptionMessage = $"SaveCharacter() - InsertInto ClassStats:: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
+                var exceptionMessage =
+                    $"SaveCharacter() - InsertInto ClassStats:: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
                 Console.WriteLine(exceptionMessage);
             }
         }
 
-        public void Death(Account acc, Char chr, string killer)    //Save first
+        public void Death(Account acc, Char chr, string killer) //Save first
         {
-            try
-            {
-                var cmd = CreateQuery();
-                cmd.CommandText = @"UPDATE characters SET 
+            var cmd = CreateQuery();
+            cmd.CommandText = @"UPDATE characters SET 
 dead=TRUE, 
 deathTime=NOW() 
 WHERE accId=@accId AND charId=@charId;";
-                cmd.Parameters.AddWithValue("@accId", acc.AccountId);
-                cmd.Parameters.AddWithValue("@charId", chr.CharacterId);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = $"Death() -- UpdateCharacters :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                Console.WriteLine(exceptionMessage);
-            }
+            cmd.Parameters.AddWithValue("@accId", acc.AccountId);
+            cmd.Parameters.AddWithValue("@charId", chr.CharacterId);
+            cmd.ExecuteNonQuery();
 
             bool firstBorn;
             var finalFame = chr.FameStats.CalculateTotal(acc, chr, chr.CurrentFame, out firstBorn);
 
-            try
-            {
-                var cmd = CreateQuery();
-                cmd.CommandText = @"UPDATE stats SET 
+            cmd = CreateQuery();
+            cmd.CommandText = @"UPDATE stats SET 
 fame=fame+@amount, 
 totalFame=totalFame+@amount 
 WHERE accId=@accId;";
-                cmd.Parameters.AddWithValue("@accId", acc.AccountId);
-                cmd.Parameters.AddWithValue("@amount", finalFame);
-                cmd.ExecuteNonQuery();
+            cmd.Parameters.AddWithValue("@accId", acc.AccountId);
+            cmd.Parameters.AddWithValue("@amount", finalFame);
+            cmd.ExecuteNonQuery();
 
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = $"Death() -- UpdateStats :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                Console.WriteLine(exceptionMessage);
-            }
 
-            try
+
+            if (acc.Guild.Name != "")
             {
-                if (acc.Guild.Name != "")
-                {
-                    var cmd = CreateQuery();
-                    cmd.CommandText = @"UPDATE guilds SET
+                cmd = CreateQuery();
+                cmd.CommandText = @"UPDATE guilds SET
 guildFame=guildFame+@amount,
 totalGuildFame=totalGuildFame+@amount
 WHERE name=@name;";
-                    cmd.Parameters.AddWithValue("@amount", finalFame);
-                    cmd.Parameters.AddWithValue("@name", acc.Guild.Name);
-                    cmd.ExecuteNonQuery();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                var exceptionMessage = $"Death() -- UpdateGuilds :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                Console.WriteLine(exceptionMessage);
-            }
-
-
-            try
-            {
-                var cmd = CreateQuery();
-                cmd.CommandText =
-                    @"INSERT INTO death(accId, chrId, name, charType, tex1, tex2, items, fame, fameStats, totalFame, firstBorn, killer) 
-VALUES(@accId, @chrId, @name, @objType, @tex1, @tex2, @items, @fame, @fameStats, @totalFame, @firstBorn, @killer);";
-                cmd.Parameters.AddWithValue("@accId", acc.AccountId);
-                cmd.Parameters.AddWithValue("@chrId", chr.CharacterId);
-                cmd.Parameters.AddWithValue("@name", acc.Name);
-                cmd.Parameters.AddWithValue("@objType", chr.ObjectType);
-                cmd.Parameters.AddWithValue("@tex1", chr.Tex1);
-                cmd.Parameters.AddWithValue("@tex2", chr.Tex2);
-                cmd.Parameters.AddWithValue("@items", chr._Equipment);
-                cmd.Parameters.AddWithValue("@fame", chr.CurrentFame);
-                cmd.Parameters.AddWithValue("@fameStats", chr.PCStats);
-                cmd.Parameters.AddWithValue("@totalFame", finalFame);
-                cmd.Parameters.AddWithValue("@firstBorn", firstBorn);
-                cmd.Parameters.AddWithValue("@killer", killer);
+                cmd.Parameters.AddWithValue("@amount", finalFame);
+                cmd.Parameters.AddWithValue("@name", acc.Guild.Name);
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
-            {
-                var exceptionMessage = $"Death() -- InsertDeath :: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                Console.WriteLine(exceptionMessage);
-            }
+
+            cmd = CreateQuery();
+            cmd.CommandText =
+                @"INSERT INTO death(accId, chrId, name, charType, tex1, tex2, items, fame, fameStats, totalFame, firstBorn, killer) 
+VALUES(@accId, @chrId, @name, @objType, @tex1, @tex2, @items, @fame, @fameStats, @totalFame, @firstBorn, @killer);";
+            cmd.Parameters.AddWithValue("@accId", acc.AccountId);
+            cmd.Parameters.AddWithValue("@chrId", chr.CharacterId);
+            cmd.Parameters.AddWithValue("@name", acc.Name);
+            cmd.Parameters.AddWithValue("@objType", chr.ObjectType);
+            cmd.Parameters.AddWithValue("@tex1", chr.Tex1);
+            cmd.Parameters.AddWithValue("@tex2", chr.Tex2);
+            cmd.Parameters.AddWithValue("@items", chr._Equipment);
+            cmd.Parameters.AddWithValue("@fame", chr.CurrentFame);
+            cmd.Parameters.AddWithValue("@fameStats", chr.PCStats);
+            cmd.Parameters.AddWithValue("@totalFame", finalFame);
+            cmd.Parameters.AddWithValue("@firstBorn", firstBorn);
+            cmd.Parameters.AddWithValue("@killer", killer);
+            cmd.ExecuteNonQuery();
         }
 
         public string GetCurrentVer()

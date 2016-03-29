@@ -987,52 +987,39 @@ namespace wServer.realm.entities
                 Text = Name + " died at Level " + Level + ", with " + Fame + " Fame" + ", killed by " + killer
             }, null);
 
-            try
+            psr.Character.Dead = true;
+            SaveToCharacter();
+            if (Owner.Id != -6)
             {
-                psr.Character.Dead = true;
-                SaveToCharacter();
-                if (Owner.Id != -6)
+                using (Database dbx = new Database())
                 {
-                    using (Database dbx = new Database())
+                    try
                     {
-                        try
-                        {
-                            //psr.Database.SaveCharacter(psr.Account, psr.Character);
-                            dbx.SaveCharacter(psr.Account, psr.Character);
-                        }
-                        catch (Exception ex)
-                        {
-                            var exceptionMessage =
-                                $"SaveCharacter():: Message: {ex.Message} -- DATA: {JsonConvert.SerializeObject(ex.Data)} ;; Account: {JsonConvert.SerializeObject(psr.Account)} ;; Character: {JsonConvert.SerializeObject(psr.Character)} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                            Console.WriteLine(exceptionMessage);
-                        }
-                        try
-                        {
-                            //psr.Database.Death(psr.Account, psr.Character, killer);
-                            dbx.Death(psr.Account, psr.Character, killer);
-                        }
-                        catch (Exception ex)
-                        {
-                            var exceptionMessage =
-                                $"Death():: Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                            Console.WriteLine(exceptionMessage);
-                        }
+                        /* DBFIX ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+                         *  psr.Database occassionally returns as NULL
+                         *  DB Connection should not exist as property on psr
+                         */
+                        //psr.Database.SaveCharacter(psr.Account, psr.Character);
+                        //psr.Database.Death(psr.Account, psr.Character, killer);
+                        dbx.SaveCharacter(psr.Account, psr.Character);
+                        dbx.Death(psr.Account, psr.Character, killer);
+                    }
+                    catch (Exception ex)
+                    {
+                        var exceptionMessage =$"Player.cs -> Death():: Message: {ex.Message} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
+                        Console.WriteLine(exceptionMessage);
                     }
                 }
-                psr.SendPacket(new DeathPacket()
-                {
-                    AccountId = AccountId,
-                    CharId = psr.Character.CharacterId,
-                    Killer = killer
-                });
-                Owner.Timers.Add(new WorldTimer(1000, (w, t) => psr.Disconnect()));
-                Owner.LeaveWorld(this);
             }
-            catch (Exception ex)
+            psr.SendPacket(new DeathPacket()
             {
-                var exceptionMessage = $"Message: {ex.Message} -- DATA: {ex.Data} -- TargetSite: {ex.TargetSite} -- Source: {ex.Source} -- StackTrace: {ex.StackTrace} -- InnerException: {ex.InnerException}";
-                Console.WriteLine(exceptionMessage);
-            }
+                AccountId = AccountId,
+                CharId = psr.Character.CharacterId,
+                Killer = killer
+            });
+            Owner.Timers.Add(new WorldTimer(1000, (w, t) => psr.Disconnect()));
+            Owner.LeaveWorld(this);
+
         }
     }
 }
